@@ -33,23 +33,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpView() {
-        buttonConvertCelcius.setOnClickListener { celciusValueChanged(editTempreture.text.toString()) }
-        buttonConvertFahrenheit.setOnClickListener { fahrenheitValueChanged(editTempreture.text.toString()) }
+        buttonConvertCelcius.setOnClickListener { convertTemperature("C", editTempreture.text.toString()) }
+        buttonConvertFahrenheit.setOnClickListener { convertTemperature("F", editTempreture.text.toString()) }
     }
 
-    private fun celciusValueChanged(value: String) {
-        Log.d("Main Activity", "Fahrenheit Value changed to $value")
-        js.evaluateScript("var type = \"C\"")
-        js.evaluateScript("var degree = $value")
-        js.evaluateScript(script)
-        textResult.text = js.property("converstion").toNumber().toString()
-    }
-
-    private fun fahrenheitValueChanged(value: String) {
-        Log.d("Main Activity", "Fahrenheit Value changed to $value")
-        js.evaluateScript("var type = \"F\"")
-        js.evaluateScript("var degree = $value")
-        js.evaluateScript(script)
-        textResult.text = js.property("converstion").toString()
+    private fun convertTemperature(type: String, value: String) {
+        with(js) {
+            evaluateScript("var type = \"$type\"")
+            evaluateScript("var degree = $value")
+            evaluateScript(script)
+            textResult.text = property("converstion").toNumber().toString()
+        }
     }
 }
