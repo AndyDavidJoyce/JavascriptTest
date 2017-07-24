@@ -2,7 +2,6 @@ package com.andrewjoyce.javascripttest
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import org.liquidplayer.javascript.JSContext
 
