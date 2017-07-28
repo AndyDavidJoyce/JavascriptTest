@@ -8,17 +8,17 @@ import org.liquidplayer.javascript.JSContext
 class MainActivity : AppCompatActivity() {
 
     val js = JSContext()
-    val script = "function convert (type, degree) {\n" +
-            "    var convertedTempt\n" +
+    val script = "function convert (type, temp) {\n" +
+            "    var convertedTemp\n" +
             "    if (type == \"C\") {\n" +
-            "        convertedTempt = degree * 9 / 5 + 32\n" +
+            "        convertedTemp = temp * 9 / 5 + 32\n" +
             "    } else {\n" +
-            "        convertedTempt = (degree -32) * 5 / 9\n" +
+            "        convertedTemp = (temp -32) * 5 / 9\n" +
             "    }\n" +
-            "    return convertedTempt\n" +
+            "    return convertedTemp\n" +
             "}\n" +
             "\n" +
-            "var converstion = convert(type, degree)"
+            "var converstion = convert(type, temp)"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +33,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun convertTemperature(type: String, value: String) {
         with(js) {
+            //Set the values for the variables used by the convert function
             evaluateScript("var type = \"$type\"")
-            evaluateScript("var degree = $value")
+            evaluateScript("var temp = $value")
             evaluateScript(script)
+            //Get the value returned by the conversion function
             textResult.text = property("converstion").toNumber().toString()
         }
     }
